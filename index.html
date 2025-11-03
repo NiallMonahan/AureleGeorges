@@ -3,7 +3,7 @@
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Values Bit</title>
+    <title>Change Drivers Survey - Values Bit</title>
 
     <!-- Bootstrap -->
     <link
@@ -25,15 +25,29 @@
         --c-light: #eeeeee;
       }
 
+      /* Light mode variables */
+      body.light-mode {
+        --c-black: #f5f5f5;
+        --c-maroon: #c84040;
+        --c-red: #e85858;
+        --c-light: #2d2d2d;
+      }
+
       body {
         background: var(--c-black);
         color: var(--c-light);
+        transition: background 0.3s ease, color 0.3s ease;
       }
 
       .navbar {
         background-color: var(--c-maroon);
         padding: 1rem 0;
         box-shadow: 0 2px 10px rgba(0, 0, 0, 0.3);
+        transition: background-color 0.3s ease;
+      }
+
+      body.light-mode .navbar {
+        box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
       }
 
       .navbar-brand {
@@ -42,6 +56,10 @@
         font-size: 1.4rem;
         padding: 0.5rem 1rem;
         transition: all 0.3s ease;
+      }
+
+      body.light-mode .navbar-brand {
+        color: white !important;
       }
 
       .navbar-brand:hover {
@@ -58,11 +76,20 @@
         background-color: rgba(255, 255, 255, 0.1);
       }
 
+      body.light-mode .nav-link {
+        color: white !important;
+        border-color: white;
+      }
+
       .nav-link:hover {
         color: var(--c-light) !important;
         background-color: var(--c-red);
         transform: translateY(-1px);
         border-color: var(--c-red);
+      }
+
+      body.light-mode .nav-link:hover {
+        color: white !important;
       }
 
       .nav-item {
@@ -80,8 +107,428 @@
         padding: 0.5rem;
       }
 
+      body.light-mode .navbar-toggler {
+        border-color: white;
+      }
+
       .navbar-toggler-icon {
         background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(238, 238, 238, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+      }
+
+      body.light-mode .navbar-toggler-icon {
+        background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 30 30'%3e%3cpath stroke='rgba(255, 255, 255, 1)' stroke-linecap='round' stroke-miterlimit='10' stroke-width='2' d='M4 7h22M4 15h22M4 23h22'/%3e%3c/svg%3e");
+      }
+
+      .nav-link i {
+        margin-right: 8px;
+      }
+
+      #participantCount {
+        cursor: default;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-color: var(--c-light);
+      }
+
+      body.light-mode #participantCount {
+        border-color: white;
+      }
+
+      #participantCount:hover {
+        transform: none;
+        background-color: rgba(255, 255, 255, 0.1);
+        border-color: var(--c-light);
+      }
+
+      body.light-mode #participantCount:hover {
+        border-color: white;
+      }
+
+      /* Values Bit boxes */
+      .vb-box {
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 16px;
+        padding: 1.25rem 1.25rem 1rem;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25),
+          inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        transition: transform 0.2s ease, box-shadow 0.2s ease,
+          border-color 0.2s ease, background 0.3s ease;
+        height: 100%;
+      }
+
+      body.light-mode .vb-box {
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .vb-box:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+        border-color: var(--c-red);
+      }
+
+      body.light-mode .vb-box:hover {
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+      }
+
+      .vb-title {
+        color: var(--c-light);
+        margin: 0 0 0.5rem;
+        font-weight: 700;
+        letter-spacing: 0.2px;
+      }
+      .vb-title::after {
+        content: "";
+        display: block;
+        width: 64px;
+        height: 3px;
+        margin-top: 6px;
+        border-radius: 2px;
+        background: linear-gradient(90deg, var(--c-maroon), var(--c-red));
+        opacity: 0.9;
+      }
+      .vb-desc {
+        color: rgba(238, 238, 238, 0.85);
+        margin-bottom: 0.9rem;
+        line-height: 1.5;
+      }
+
+      body.light-mode .vb-desc {
+        color: rgba(45, 45, 45, 0.85);
+      }
+
+      /* Ternary plot styles */
+      .ternary-container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        gap: 1rem;
+      }
+
+      .ternary-plot {
+        width: 100%;
+        max-width: 400px;
+        height: auto;
+        cursor: crosshair;
+      }
+
+      .ternary-triangle {
+        fill: rgba(142, 22, 22, 0.1);
+        stroke: var(--c-light);
+        stroke-width: 2;
+        transition: fill 0.2s ease, stroke 0.3s ease;
+      }
+
+      body.light-mode .ternary-triangle {
+        fill: rgba(232, 88, 88, 0.15);
+        stroke: var(--c-light);
+      }
+
+      .ternary-triangle:hover {
+        fill: rgba(142, 22, 22, 0.2);
+      }
+
+      body.light-mode .ternary-triangle:hover {
+        fill: rgba(232, 88, 88, 0.25);
+      }
+
+      .ternary-label {
+        fill: var(--c-light);
+        font-size: 13px;
+        font-weight: 600;
+        text-anchor: middle;
+        transition: fill 0.3s ease;
+      }
+
+      .ternary-dot {
+        fill: var(--c-red);
+        stroke: var(--c-light);
+        stroke-width: 2;
+        filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.5));
+        transition: fill 0.3s ease, stroke 0.3s ease;
+      }
+
+      .ternary-values {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 1rem;
+        justify-content: center;
+        color: rgba(238, 238, 238, 0.85);
+        font-size: 0.95rem;
+      }
+
+      body.light-mode .ternary-values {
+        color: rgba(45, 45, 45, 0.85);
+      }
+
+      .ternary-values span {
+        padding: 0.4rem 0.8rem;
+        background: rgba(142, 22, 22, 0.2);
+        border: 1px solid rgba(238, 238, 238, 0.2);
+        border-radius: 8px;
+        transition: background 0.3s ease, border-color 0.3s ease;
+      }
+
+      body.light-mode .ternary-values span {
+        background: rgba(232, 88, 88, 0.15);
+        border: 1px solid rgba(45, 45, 45, 0.2);
+      }
+
+      .ternary-values strong {
+        color: var(--c-red);
+        font-weight: 700;
+      }
+
+      /* Values description cards */
+      .value-card {
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 16px;
+        padding: 1.5rem;
+        text-align: center;
+        height: 100%;
+        transition: transform 0.2s ease, box-shadow 0.2s ease,
+          border-color 0.2s ease, background 0.3s ease;
+      }
+
+      body.light-mode .value-card {
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+      }
+
+      .value-card:hover {
+        transform: translateY(-4px);
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.35);
+        border-color: var(--c-red);
+      }
+
+      body.light-mode .value-card:hover {
+        box-shadow: 0 12px 28px rgba(0, 0, 0, 0.15);
+      }
+
+      .value-icon {
+        font-size: 3rem;
+        margin-bottom: 1rem;
+      }
+
+      .value-heading {
+        color: var(--c-light);
+        font-size: 1.25rem;
+        font-weight: 700;
+        margin-bottom: 0.75rem;
+      }
+
+      .value-description {
+        color: rgba(238, 238, 238, 0.85);
+        font-size: 0.95rem;
+        line-height: 1.6;
+        margin: 0;
+      }
+
+      body.light-mode .value-description {
+        color: rgba(45, 45, 45, 0.85);
+      }
+
+      /* Submit section */
+      .submit-box {
+        background: rgba(255, 255, 255, 0.06);
+        border: 1px solid rgba(255, 255, 255, 0.15);
+        border-radius: 16px;
+        padding: 2rem;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.25),
+          inset 0 1px 0 rgba(255, 255, 255, 0.05);
+        transition: background 0.3s ease, border-color 0.3s ease,
+          box-shadow 0.3s ease;
+      }
+
+      body.light-mode .submit-box {
+        background: rgba(255, 255, 255, 0.9);
+        border: 1px solid rgba(0, 0, 0, 0.1);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+      }
+
+      .submit-title {
+        color: var(--c-light);
+        margin: 0 0 0.5rem;
+        font-weight: 700;
+        letter-spacing: 0.2px;
+      }
+
+      .submit-title::after {
+        content: "";
+        display: block;
+        width: 64px;
+        height: 3px;
+        margin-top: 6px;
+        border-radius: 2px;
+        background: linear-gradient(90deg, var(--c-maroon), var(--c-red));
+        opacity: 0.9;
+      }
+
+      .submit-desc {
+        color: rgba(238, 238, 238, 0.85);
+        margin-bottom: 1.5rem;
+        line-height: 1.5;
+      }
+
+      body.light-mode .submit-desc {
+        color: rgba(45, 45, 45, 0.85);
+      }
+
+      .form-label {
+        color: var(--c-light);
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+      }
+
+      .form-control-dark {
+        background: rgba(0, 0, 0, 0.3);
+        border: 1px solid rgba(238, 238, 238, 0.3);
+        color: var(--c-light);
+        padding: 0.75rem 1rem;
+        border-radius: 8px;
+        transition: all 0.3s ease;
+      }
+
+      body.light-mode .form-control-dark {
+        background: rgba(255, 255, 255, 0.95);
+        border: 1px solid rgba(45, 45, 45, 0.3);
+        color: var(--c-light);
+      }
+
+      .form-control-dark:focus {
+        background: rgba(0, 0, 0, 0.4);
+        border-color: var(--c-red);
+        color: var(--c-light);
+        box-shadow: 0 0 0 0.2rem rgba(216, 64, 64, 0.25);
+      }
+
+      body.light-mode .form-control-dark:focus {
+        background: rgba(255, 255, 255, 1);
+        border-color: var(--c-red);
+      }
+
+      .form-control-dark::placeholder {
+        color: rgba(238, 238, 238, 0.5);
+      }
+
+      body.light-mode .form-control-dark::placeholder {
+        color: rgba(45, 45, 45, 0.5);
+      }
+
+      .form-control-dark.is-invalid {
+        border-color: #dc3545;
+        box-shadow: 0 0 0 0.2rem rgba(220, 53, 69, 0.25);
+      }
+
+      .btn-submit {
+        background: linear-gradient(135deg, var(--c-maroon), var(--c-red));
+        border: none;
+        color: var(--c-light);
+        padding: 0.75rem 2rem;
+        font-weight: 600;
+        font-size: 1.1rem;
+        border-radius: 25px;
+        transition: all 0.3s ease;
+        box-shadow: 0 4px 12px rgba(216, 64, 64, 0.3);
+      }
+
+      body.light-mode .btn-submit {
+        color: white;
+      }
+
+      .btn-submit:hover {
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(216, 64, 64, 0.5);
+        background: linear-gradient(135deg, var(--c-red), var(--c-maroon));
+      }
+
+      .btn-submit:active {
+        transform: translateY(0);
+      }
+
+      /* Success notification */
+      .success-toast {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: linear-gradient(135deg, #28a745, #20c997);
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(40, 167, 69, 0.4);
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-weight: 600;
+        z-index: 9999;
+        animation: slideIn 0.3s ease-out;
+      }
+
+      .success-toast i {
+        font-size: 1.5rem;
+      }
+
+      @keyframes slideIn {
+        from {
+          transform: translateX(400px);
+          opacity: 0;
+        }
+        to {
+          transform: translateX(0);
+          opacity: 1;
+        }
+      }
+
+      @keyframes slideOut {
+        from {
+          transform: translateX(0);
+          opacity: 1;
+        }
+        to {
+          transform: translateX(400px);
+          opacity: 0;
+        }
+      }
+
+      .success-toast.hiding {
+        animation: slideOut 0.3s ease-in forwards;
+      }
+
+      /* Error notification */
+      .error-toast {
+        position: fixed;
+        top: 20px;
+        right: 20px;
+        background: linear-gradient(135deg, var(--c-maroon), var(--c-red));
+        color: white;
+        padding: 1rem 1.5rem;
+        border-radius: 12px;
+        box-shadow: 0 8px 24px rgba(216, 64, 64, 0.4);
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        font-weight: 600;
+        z-index: 9999;
+        animation: slideIn 0.3s ease-out;
+      }
+
+      .error-toast i {
+        font-size: 1.5rem;
+      }
+
+      .error-toast.hiding {
+        animation: slideOut 0.3s ease-in forwards;
+      }
+
+      .text-secondary {
+        transition: color 0.3s ease;
+      }
+
+      body.light-mode .text-secondary {
+        color: rgba(45, 45, 45, 0.7) !important;
       }
     </style>
   </head>
@@ -101,20 +548,6 @@
         </button>
         <div class="collapse navbar-collapse" id="navMenu">
           <ul class="navbar-nav ms-auto">
-            <!-- Survey responses -->
-            <li class="nav-item">
-              <a
-                class="nav-link"
-                href="#"
-                id="participantCount"
-                data-bs-toggle="tooltip"
-                data-bs-placement="bottom"
-                title="Number of people who completed the survey"
-              >
-                <i class="bi bi-people-fill"></i> Survey Responses: 2,481
-              </a>
-            </li>
-
             <!-- Theme toggle -->
             <li class="nav-item">
               <a
@@ -134,10 +567,158 @@
     </nav>
 
     <div class="container py-5 text-center">
-      <h1 class="fw-bold">Welcome to the Values Bit</h1>
+      <h1 class="fw-bold">Change Drivers Survey</h1>
       <p class="lead text-secondary">
         Exploring how our social priorities evolve over time.
       </p>
+    </div>
+
+    <!-- Graph/info boxes -->
+    <div class="container pb-5">
+      <div class="row g-4 align-items-stretch">
+        <div class="col-12 col-md-6">
+          <section class="vb-box h-100">
+            <h2 class="vb-title h5">Current Values (2025)</h2>
+            <p class="vb-desc">
+              Click inside the triangle to show how you think society currently
+              balances the three values. Your point will reflect today's mix
+              across the triangle.
+            </p>
+            <div class="ternary-container">
+              <svg class="ternary-plot" id="plot2025" viewBox="0 0 400 400">
+                <polygon
+                  points="200,50 50,346.41 350,346.41"
+                  class="ternary-triangle"
+                />
+
+                <!-- Top label -->
+                <text x="200" y="30" class="ternary-label">
+                  A. Technological
+                </text>
+                <text x="200" y="45" class="ternary-label">Progress</text>
+
+                <!-- Bottom-left label -->
+                <text x="50" y="365" class="ternary-label">B. Emotional</text>
+                <text x="50" y="380" class="ternary-label">Authenticity</text>
+
+                <!-- Bottom-right label -->
+                <text x="350" y="365" class="ternary-label">C. Social</text>
+                <text x="350" y="380" class="ternary-label">Wellbeing</text>
+              </svg>
+              <div class="ternary-values" id="values2025">
+                <span>A. Tech Progress: <strong>--</strong></span>
+                <span>B. Authenticity: <strong>--</strong></span>
+                <span>C. Wellbeing: <strong>--</strong></span>
+              </div>
+            </div>
+          </section>
+        </div>
+        <div class="col-12 col-md-6">
+          <section class="vb-box h-100">
+            <h2 class="vb-title h5">Future Values (2075)</h2>
+            <p class="vb-desc">
+              Click inside the triangle to show how you think society will
+              balance the three values in 2075. Place your point to indicate the
+              future mix.
+            </p>
+            <div class="ternary-container">
+              <svg class="ternary-plot" id="plot2075" viewBox="0 0 400 400">
+                <polygon
+                  points="200,50 50,346.41 350,346.41"
+                  class="ternary-triangle"
+                />
+
+                <!-- Top label -->
+                <text x="200" y="30" class="ternary-label">
+                  A. Technological
+                </text>
+                <text x="200" y="45" class="ternary-label">Progress</text>
+
+                <!-- Bottom-left label -->
+                <text x="50" y="365" class="ternary-label">B. Emotional</text>
+                <text x="50" y="380" class="ternary-label">Authenticity</text>
+
+                <!-- Bottom-right label -->
+                <text x="350" y="365" class="ternary-label">C. Social</text>
+                <text x="350" y="380" class="ternary-label">Wellbeing</text>
+              </svg>
+              <div class="ternary-values" id="values2075">
+                <span>A. Tech Progress: <strong>--</strong></span>
+                <span>B. Authenticity: <strong>--</strong></span>
+                <span>C. Wellbeing: <strong>--</strong></span>
+              </div>
+            </div>
+          </section>
+        </div>
+      </div>
+    </div>
+
+    <!-- Values descriptions section -->
+    <div class="container pb-5">
+      <div class="row g-4">
+        <div class="col-12 col-md-4">
+          <div class="value-card">
+            <div class="value-icon">🚀</div>
+            <h3 class="value-heading">Technological Progress</h3>
+            <p class="value-description">
+              The belief that innovation and AI improve life. This value
+              emphasizes advancement through technology, automation, and
+              scientific breakthroughs that enhance human capability and
+              efficiency.
+            </p>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="value-card">
+            <div class="value-icon">❤️</div>
+            <h3 class="value-heading">Emotional Authenticity</h3>
+            <p class="value-description">
+              The importance of genuine human connection. This value prioritizes
+              real relationships, emotional vulnerability, and meaningful
+              interactions that foster deep understanding between people.
+            </p>
+          </div>
+        </div>
+        <div class="col-12 col-md-4">
+          <div class="value-card">
+            <div class="value-icon">🌍</div>
+            <h3 class="value-heading">Social Wellbeing</h3>
+            <p class="value-description">
+              The priority placed on collective happiness and mental health.
+              This value focuses on community support, psychological wellness,
+              and creating environments where everyone can thrive together.
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Submit section -->
+    <div class="container pb-5">
+      <div class="row justify-content-center">
+        <div class="col-12 col-md-8 col-lg-6">
+          <div class="submit-box">
+            <h2 class="submit-title h5">Submit Your Response</h2>
+            <p class="submit-desc">
+              Please enter your name to save your predictions for both 2025 and
+              2075.
+            </p>
+            <div class="mb-3">
+              <label for="userName" class="form-label">Your Name</label>
+              <input
+                type="text"
+                class="form-control form-control-dark"
+                id="userName"
+                placeholder="Enter your name"
+                required
+              />
+            </div>
+            <button type="button" class="btn btn-submit w-100" id="submitBtn">
+              <i class="bi bi-check-circle-fill me-2"></i>Submit Survey
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- Bootstrap JS (load first) -->
@@ -145,8 +726,16 @@
 
     <!-- App JS (run after Bootstrap and after elements exist) -->
     <script>
+      // Google Apps Script Web App URL
+      const WEB_APP_URL =
+        "https://script.google.com/macros/s/AKfycbxixIQkimJiCU3OI6u7YK7C105oe1TF2J5QlIDgVTcvk-MMNoJfb1E-0K1MSt8W8dc/exec";
+
       // Safe init after DOM + Bootstrap
       (function () {
+        // Store the values from both triangles
+        let currentValues = { A: null, B: null, C: null };
+        let futureValues = { A: null, B: null, C: null };
+
         // Tooltips
         if (window.bootstrap?.Tooltip) {
           const triggerList = document.querySelectorAll(
@@ -160,14 +749,291 @@
         if (themeToggle) {
           themeToggle.addEventListener("click", (e) => {
             e.preventDefault();
-            if (themeToggle.textContent.includes("Dark")) {
-              themeToggle.innerHTML =
-                '<i class="bi bi-sun-fill"></i> Light Mode';
-            } else {
+            document.body.classList.toggle("light-mode");
+
+            if (document.body.classList.contains("light-mode")) {
               themeToggle.innerHTML =
                 '<i class="bi bi-moon-fill"></i> Dark Mode';
+              localStorage.setItem("theme", "light");
+            } else {
+              themeToggle.innerHTML =
+                '<i class="bi bi-sun-fill"></i> Light Mode';
+              localStorage.setItem("theme", "dark");
             }
           });
+
+          // Load saved theme preference
+          const savedTheme = localStorage.getItem("theme");
+          if (savedTheme === "light") {
+            document.body.classList.add("light-mode");
+            themeToggle.innerHTML = '<i class="bi bi-moon-fill"></i> Dark Mode';
+          }
+        }
+
+        // Ternary plot interaction
+        function setupTernaryPlot(svgId, valuesId, isCurrent) {
+          const svg = document.getElementById(svgId);
+          if (!svg) return;
+
+          const triangle = svg.querySelector(".ternary-triangle");
+          const valuesDisplay = document.getElementById(valuesId);
+
+          // Triangle vertices in SVG coordinates
+          const vertices = {
+            A: { x: 200, y: 50 }, // Top
+            B: { x: 50, y: 346.41 }, // Bottom-left
+            C: { x: 350, y: 346.41 }, // Bottom-right
+          };
+
+          svg.addEventListener("click", (e) => {
+            const rect = svg.getBoundingClientRect();
+            const svgX = ((e.clientX - rect.left) / rect.width) * 400;
+            const svgY = ((e.clientY - rect.top) / rect.height) * 400;
+
+            // Check if point is inside triangle
+            if (
+              !isPointInTriangle(svgX, svgY, vertices.A, vertices.B, vertices.C)
+            ) {
+              return;
+            }
+
+            // Remove existing dot
+            const existingDot = svg.querySelector(".ternary-dot");
+            if (existingDot) existingDot.remove();
+
+            // Add new dot
+            const dot = document.createElementNS(
+              "http://www.w3.org/2000/svg",
+              "circle"
+            );
+            dot.setAttribute("cx", svgX);
+            dot.setAttribute("cy", svgY);
+            dot.setAttribute("r", 8);
+            dot.classList.add("ternary-dot");
+            svg.appendChild(dot);
+
+            // Calculate barycentric coordinates
+            const percentages = calculateBarycentric(svgX, svgY, vertices);
+
+            // Store values
+            if (isCurrent) {
+              currentValues = {
+                A: percentages.A,
+                B: percentages.B,
+                C: percentages.C,
+              };
+            } else {
+              futureValues = {
+                A: percentages.A,
+                B: percentages.B,
+                C: percentages.C,
+              };
+            }
+
+            // Update display
+            const spans = valuesDisplay.querySelectorAll("strong");
+            spans[0].textContent = percentages.A + "%";
+            spans[1].textContent = percentages.B + "%";
+            spans[2].textContent = percentages.C + "%";
+          });
+        }
+
+        // Check if point is inside triangle
+        function isPointInTriangle(px, py, v1, v2, v3) {
+          const sign = (p1, p2, p3) => {
+            return (
+              (p1.x - p3.x) * (p2.y - p3.y) - (p2.x - p3.x) * (p1.y - p3.y)
+            );
+          };
+
+          const d1 = sign({ x: px, y: py }, v1, v2);
+          const d2 = sign({ x: px, y: py }, v2, v3);
+          const d3 = sign({ x: px, y: py }, v3, v1);
+
+          const hasNeg = d1 < 0 || d2 < 0 || d3 < 0;
+          const hasPos = d1 > 0 || d2 > 0 || d3 > 0;
+
+          return !(hasNeg && hasPos);
+        }
+
+        // Calculate barycentric coordinates (percentages)
+        function calculateBarycentric(px, py, vertices) {
+          const { A, B, C } = vertices;
+
+          const v0x = C.x - A.x;
+          const v0y = C.y - A.y;
+          const v1x = B.x - A.x;
+          const v1y = B.y - A.y;
+          const v2x = px - A.x;
+          const v2y = py - A.y;
+
+          const dot00 = v0x * v0x + v0y * v0y;
+          const dot01 = v0x * v1x + v0y * v1y;
+          const dot02 = v0x * v2x + v0y * v2y;
+          const dot11 = v1x * v1x + v1y * v1y;
+          const dot12 = v1x * v2x + v1y * v2y;
+
+          const invDenom = 1 / (dot00 * dot11 - dot01 * dot01);
+          const u = (dot11 * dot02 - dot01 * dot12) * invDenom;
+          const v = (dot00 * dot12 - dot01 * dot02) * invDenom;
+
+          // Convert to percentages (barycentric coordinates)
+          const pA = Math.round((1 - u - v) * 100);
+          const pB = Math.round(v * 100);
+          const pC = Math.round(u * 100);
+
+          // Ensure they sum to 100
+          const sum = pA + pB + pC;
+          const diff = 100 - sum;
+
+          return {
+            A: Math.max(0, pA + diff),
+            B: Math.max(0, pB),
+            C: Math.max(0, pC),
+          };
+        }
+
+        // Initialize both plots (true = current, false = future)
+        setupTernaryPlot("plot2025", "values2025", true);
+        setupTernaryPlot("plot2075", "values2075", false);
+
+        // Submit button handler
+        const submitBtn = document.getElementById("submitBtn");
+        const userName = document.getElementById("userName");
+
+        if (submitBtn) {
+          submitBtn.addEventListener("click", async () => {
+            // Validate name is entered
+            if (!userName.value.trim()) {
+              userName.focus();
+              userName.classList.add("is-invalid");
+              showErrorNotification("Please enter your name before submitting");
+              return;
+            }
+
+            // Validate that both triangles have been clicked
+            if (currentValues.A === null || futureValues.A === null) {
+              showErrorNotification(
+                "Please click on both triangles to select your values"
+              );
+              return;
+            }
+
+            // Remove invalid class if present
+            userName.classList.remove("is-invalid");
+
+            // Disable button during submission
+            submitBtn.disabled = true;
+            const originalText = submitBtn.innerHTML;
+            submitBtn.innerHTML =
+              '<i class="bi bi-hourglass-split me-2"></i>Submitting...';
+
+            // Build payload
+            const payload = {
+              name: userName.value.trim(),
+              current: {
+                a: currentValues.A,
+                b: currentValues.B,
+                c: currentValues.C,
+              },
+              future: {
+                a: futureValues.A,
+                b: futureValues.B,
+                c: futureValues.C,
+              },
+            };
+
+            try {
+              // Send to Google Apps Script
+              const response = await fetch(WEB_APP_URL, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(payload),
+                mode: "no-cors", // Required for Google Apps Script
+              });
+
+              // Show success notification
+              showSuccessNotification();
+
+              // Update button state
+              submitBtn.innerHTML =
+                '<i class="bi bi-check-circle-fill me-2"></i>Submitted';
+              submitBtn.classList.add("btn-success");
+
+              // Clear form after delay
+              setTimeout(() => {
+                userName.value = "";
+                currentValues = { A: null, B: null, C: null };
+                futureValues = { A: null, B: null, C: null };
+
+                // Clear the dots from both triangles
+                document
+                  .querySelectorAll(".ternary-dot")
+                  .forEach((dot) => dot.remove());
+
+                // Reset percentages
+                document
+                  .querySelectorAll(".ternary-values strong")
+                  .forEach((el) => {
+                    el.textContent = "--";
+                  });
+
+                // Re-enable button
+                submitBtn.disabled = false;
+                submitBtn.innerHTML = originalText;
+                submitBtn.classList.remove("btn-success");
+              }, 3000);
+            } catch (error) {
+              console.error("Submission error:", error);
+              showErrorNotification("Submission failed — please try again");
+
+              // Re-enable button
+              submitBtn.disabled = false;
+              submitBtn.innerHTML = originalText;
+            }
+          });
+        }
+
+        function showErrorNotification(message) {
+          // Create error toast element
+          const toast = document.createElement("div");
+          toast.className = "error-toast";
+          toast.innerHTML = `
+            <i class="bi bi-exclamation-circle-fill"></i>
+            <span>${message}</span>
+          `;
+
+          // Add to page
+          document.body.appendChild(toast);
+
+          // Remove after 3 seconds
+          setTimeout(() => {
+            toast.classList.add("hiding");
+            setTimeout(() => {
+              toast.remove();
+            }, 300);
+          }, 3000);
+        }
+
+        function showSuccessNotification() {
+          // Create toast element
+          const toast = document.createElement("div");
+          toast.className = "success-toast";
+          toast.innerHTML = `
+            <i class="bi bi-check-circle-fill"></i>
+            <span>Response submitted — thank you!</span>
+          `;
+
+          // Add to page
+          document.body.appendChild(toast);
+
+          // Remove after 3 seconds
+          setTimeout(() => {
+            toast.classList.add("hiding");
+            setTimeout(() => {
+              toast.remove();
+            }, 300);
+          }, 3000);
         }
       })();
     </script>
